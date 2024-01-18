@@ -5,17 +5,20 @@ float add(float num1, float num2);
 float subtract(float num1, float num2);
 float multiply(float num1, float num2);
 float divide(float num1, float num2);
+int calculateLCM(int num1, int num2);
 
 int main() {
     char operator;
     float num1, num2, result;
 
     // Get user input
-    printf("Enter operator (+, -, *, /): ");
-    scanf("%c", &operator);
+    printf("Enter operator (+, -, *, /, LCM): ");
+    scanf(" %c", &operator);  // Note the space before %c to consume the newline character
 
-    printf("Enter two numbers: ");
-    scanf("%f %f", &num1, &num2);
+    if (operator != 'LCM') {
+        printf("Enter two numbers: ");
+        scanf("%f %f", &num1, &num2);
+    }
 
     // Perform calculation based on the operator
     switch (operator) {
@@ -31,6 +34,15 @@ int main() {
         case '/':
             result = divide(num1, num2);
             break;
+        case 'LCM':
+            if (num1 >= 0 && num2 >= 0) {
+                int lcm = calculateLCM((int)num1, (int)num2);
+                printf("LCM: %d\n", lcm);
+                return 0;
+            } else {
+                printf("Error: LCM requires non-negative integers\n");
+                return 1;
+            }
         default:
             printf("Invalid operator\n");
             return 1; // Exit the program with an error code
@@ -64,3 +76,12 @@ float divide(float num1, float num2) {
     }
 }
 
+int calculateLCM(int num1, int num2) {
+    int max = (num1 > num2) ? num1 : num2;
+    while (1) {
+        if (max % num1 == 0 && max % num2 == 0) {
+            return max;
+        }
+        max++;
+    }
+}
